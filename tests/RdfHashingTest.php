@@ -48,4 +48,49 @@ class RdfHashingTest extends TestCase
             $this->assertEquals($unique_hash, $d['hash']);
         }
     }
+
+    /**
+     * @test
+     */
+    public function testMoreComplex()
+    {
+        $base_graph = $this->resource_dir . '/base_graph.ttl';
+        $graph = new Graph();
+        $graph->parseFile($base_graph, 'turtle');
+        $expected_string = file_get_contents($this->resource_dir . '/base_graph.txt');
+        $expected_string = preg_replace("~[\r\n\s]~", '', $expected_string);
+        $expected_hash = hash('sha256', $expected_string);
+        $this->assertEquals(
+            $expected_string,
+            $this->hasher->getGraphString($graph),
+            'Did not get expected string representation'
+        );
+        $this->assertEquals(
+            $expected_hash,
+            $this->hasher->calculate($graph),
+            'Did not get expected hash value.'
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testBaseCase()
+    {
+        $base_graph = $this->resource_dir . '/supersimple.ttl';
+        $graph = new Graph();
+        $graph->parseFile($base_graph, 'turtle');
+        $expected_string = file_get_contents($this->resource_dir . '/supersimple.txt');
+        $expected_hash = hash('sha256', $expected_string);
+        $this->assertEquals(
+            $expected_string,
+            $this->hasher->getGraphString($graph),
+            'Did not get expected string representation'
+        );
+        $this->assertEquals(
+            $expected_hash,
+            $this->hasher->calculate($graph),
+            'Did not get expected hash value.'
+        );
+    }
 }

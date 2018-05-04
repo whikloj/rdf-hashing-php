@@ -1,0 +1,12 @@
+@prefix definitions: <http://example.org/definitions/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+_:whikloj definitions:worksAt [
+        rdf:type <http://example.org/University> ;
+        definitions:locatedIn <http://example.org/Winnipeg> ];
+    definitions:attended <http://example.org/University> .
+
+_:barmintor definitions:worksAt [
+        rdf:type <http://example.org/University> ;
+        definitions:locatedIn <http://example.org/NewYork> ];
+    definitions:attended <http://example.org/University> .

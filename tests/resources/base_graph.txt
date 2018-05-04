@@ -1,0 +1,51 @@
+{*
+  (http://example.org/definitions/attended
+    [http://example.org/University]
+  )
+  (http://example.org/definitions/worksAt
+    [
+      *
+      (http://example.org/definitions/locatedIn
+        [http://example.org/NewYork]
+      )
+      (http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+        [http://example.org/University]
+      )
+    ]
+  )
+}
+
+{*
+  (http://example.org/definitions/attended
+    [http://example.org/University]
+  )
+  (http://example.org/definitions/worksAt
+    [
+      *
+        (http://example.org/definitions/locatedIn
+          [http://example.org/Winnipeg]
+        )
+        (http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+          [http://example.org/University]
+        )
+    ]
+  )
+}
+
+{*
+  (http://example.org/definitions/locatedIn
+    [http://example.org/NewYork]
+  )
+  (http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+    [http://example.org/University]
+  )
+}
+
+{*
+  (http://example.org/definitions/locatedIn
+    [http://example.org/Winnipeg]
+  )
+  (http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+    [http://example.org/University]
+  )
+}
