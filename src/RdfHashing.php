@@ -212,8 +212,8 @@ class RdfHashing
      */
     private static function sortUnicode($a, $b)
     {
-        $tmpA = mb_check_encoding($a, 'UTF-8') ? $a : mb_convert_encoding($a, mb_detect_encoding($a));
-        $tmpB = mb_check_encoding($b, 'UTF-8') ? $b : mb_convert_encoding($b, mb_detect_encoding($b));
+        $tmpA = mb_check_encoding($a, 'UTF-8') ? $a : mb_convert_encoding($a, 'UTF-8', mb_detect_encoding($a));
+        $tmpB = mb_check_encoding($b, 'UTF-8') ? $b : mb_convert_encoding($b, 'UTF-8', mb_detect_encoding($b));
         return strcmp($tmpA, $tmpB);
     }
 }
