@@ -104,8 +104,8 @@ class RdfHashing
         foreach ($subjectStrings as $s) {
             $result .= RdfHashing::$SUBJECT_START . $s . RdfHashing::$SUBJECT_END;
         }
-        if (!mb_check_encoding($result, 'UTF-8')) {
-            $result = mb_convert_encoding($result, mb_detect_encoding($result), 'UTF-8');
+        if (mb_detect_encoding($result, 'UTF-8') === false) {
+            $result = mb_convert_encoding($result, 'UTF-8');
         }
         return $result;
     }
@@ -212,8 +212,8 @@ class RdfHashing
      */
     private static function sortUnicode($a, $b)
     {
-        $tmpA = mb_check_encoding($a, 'UTF-8') ? $a : mb_convert_encoding($a, 'UTF-8', mb_detect_encoding($a));
-        $tmpB = mb_check_encoding($b, 'UTF-8') ? $b : mb_convert_encoding($b, 'UTF-8', mb_detect_encoding($b));
+        $tmpA = (mb_detect_encoding($a, 'UTF-8') !== false) ? $a : mb_convert_encoding($a, 'UTF-8');
+        $tmpB = (mb_detect_encoding($b, 'UTF-8') !== false) ? $b : mb_convert_encoding($b, 'UTF-8');
         return strcmp($tmpA, $tmpB);
     }
 }
