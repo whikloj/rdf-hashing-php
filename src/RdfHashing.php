@@ -189,7 +189,11 @@ class RdfHashing
     private function encodeObject($object, array &$visitedNodes, Graph $graph)
     {
         if ($object instanceof Literal) {
-            return $object->getValue();
+            if (!is_null($object->getLang())) {
+                return "\"{$object->getValue()}\"@{$object->getLang()}";
+            } else {
+                return "\"{$object->getValue()}\"";
+            }
         } elseif ($object instanceof Resource) {
             if ($object->isBNode()) {
                 return $this->encodeSubject($object, $visitedNodes, $graph);
