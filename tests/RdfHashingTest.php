@@ -8,7 +8,7 @@ use RdfHash\RdfHashing;
 
 /**
  * Class RdfHashingTest
- * @coversDefaultClass rdfhashing\RdfHashing
+ * @coversDefaultClass RdfHash\RdfHashing
  */
 class RdfHashingTest extends TestCase
 {
@@ -31,6 +31,11 @@ class RdfHashingTest extends TestCase
 
   /**
    * @test
+   * @covers ::calculate
+   * @covers ::getGraphString
+   * @covers ::encodeSubject
+   * @covers ::encodeProperties
+   * @covers ::encodeObject
    */
     public function testHashFunction()
     {
@@ -51,6 +56,11 @@ class RdfHashingTest extends TestCase
 
     /**
      * @test
+     * @covers ::calculate
+     * @covers ::getGraphString
+     * @covers ::encodeSubject
+     * @covers ::encodeProperties
+     * @covers ::encodeObject
      */
     public function testMoreComplex()
     {
@@ -74,6 +84,11 @@ class RdfHashingTest extends TestCase
 
     /**
      * @test
+     * @covers ::calculate
+     * @covers ::getGraphString
+     * @covers ::encodeSubject
+     * @covers ::encodeProperties
+     * @covers ::encodeObject
      */
     public function testBaseCase()
     {
