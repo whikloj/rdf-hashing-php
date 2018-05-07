@@ -73,7 +73,7 @@ class RdfHashing
      * @return string
      *   The sha256 hash value.
      */
-    public function calculate(Graph $graph)
+    public static function calculate(Graph $graph)
     {
         return hash("sha256", self::getGraphString($graph));
     }
@@ -87,14 +87,14 @@ class RdfHashing
      * @return string
      *   The algorithm string.
      */
-    public function getGraphString(Graph $graph)
+    public static function getGraphString(Graph $graph)
     {
         $subjectStrings = [];
         foreach ($graph->resources() as $resource) {
             // If no properties (its an object resource).
             if (count($resource->propertyUris()) > 0) {
                 $visitedNodes = [];
-                $encoded = $this->encodeSubject($resource, $visitedNodes, $graph);
+                $encoded = self::encodeSubject($resource, $visitedNodes, $graph);
                 $subjectStrings[] = $encoded;
             }
         }
@@ -123,7 +123,7 @@ class RdfHashing
      * @return string
      *   The subject encoded as a string.
      */
-    private function encodeSubject(Resource $resource, array &$visitedNodes, Graph $graph)
+    private static function encodeSubject(Resource $resource, array &$visitedNodes, Graph $graph)
     {
         if ($resource->isBNode()) {
             if (in_array($resource->getBNodeId(), $visitedNodes)) {
@@ -135,7 +135,7 @@ class RdfHashing
         } else {
             $result = $resource->getUri();
         }
-        $result .= $this->encodeProperties($resource, $visitedNodes, $graph);
+        $result .= self::encodeProperties($resource, $visitedNodes, $graph);
         return $result;
     }
 
@@ -152,7 +152,7 @@ class RdfHashing
      * @return string
      *   The properties encoded as a string.
      */
-    private function encodeProperties(Resource $resource, array &$visitedNodes, Graph $graph)
+    private static function encodeProperties(Resource $resource, array &$visitedNodes, Graph $graph)
     {
         $all_properties = array_unique($resource->propertyUris());
         usort($all_properties, 'self::sortUnicode');
@@ -161,7 +161,7 @@ class RdfHashing
             $objectStrings = [];
             $result .= RdfHashing::$PROPERTY_START . $property;
             foreach ($resource->all("<{$property}>") as $item) {
-                $objectStrings[] = $this->encodeObject($item, $visitedNodes, $graph);
+                $objectStrings[] = self::encodeObject($item, $visitedNodes, $graph);
             }
             $objectStrings = array_unique($objectStrings);
             usort($objectStrings, 'self::sortUnicode');
@@ -186,7 +186,7 @@ class RdfHashing
      * @return string
      *   The object encoded as a string.
      */
-    private function encodeObject($object, array &$visitedNodes, Graph $graph)
+    private static function encodeObject($object, array &$visitedNodes, Graph $graph)
     {
         if ($object instanceof Literal) {
             if (!is_null($object->getLang())) {
@@ -196,7 +196,7 @@ class RdfHashing
             }
         } elseif ($object instanceof Resource) {
             if ($object->isBNode()) {
-                return $this->encodeSubject($object, $visitedNodes, $graph);
+                return self::encodeSubject($object, $visitedNodes, $graph);
             } else {
                 return $object->getUri();
             }

@@ -46,7 +46,7 @@ class RdfHashingTest extends TestCase
             //$text_graph = file_get_contents($version['url']);
             $graph = new Graph();
             $graph->parseFile($version['url'], $version['format']);
-            $data[$version['url']]['hash'] = $this->hasher->calculate($graph);
+            $data[$version['url']]['hash'] = RdfHashing::calculate($graph);
         }
         $unique_hash = reset($data)['hash'];
         foreach ($data as $d) {
@@ -72,12 +72,12 @@ class RdfHashingTest extends TestCase
         $expected_hash = hash('sha256', $expected_string);
         $this->assertEquals(
             $expected_string,
-            $this->hasher->getGraphString($graph),
+            RdfHashing::getGraphString($graph),
             'Did not get expected string representation'
         );
         $this->assertEquals(
             $expected_hash,
-            $this->hasher->calculate($graph),
+            RdfHashing::calculate($graph),
             'Did not get expected hash value.'
         );
     }
@@ -99,12 +99,12 @@ class RdfHashingTest extends TestCase
         $expected_hash = hash('sha256', $expected_string);
         $this->assertEquals(
             $expected_string,
-            $this->hasher->getGraphString($graph),
+            RdfHashing::getGraphString($graph),
             'Did not get expected string representation'
         );
         $this->assertEquals(
             $expected_hash,
-            $this->hasher->calculate($graph),
+            RdfHashing::calculate($graph),
             'Did not get expected hash value.'
         );
     }
