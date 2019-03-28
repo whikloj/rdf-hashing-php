@@ -1,13 +1,13 @@
 [![travis](https://api.travis-ci.org/whikloj/rdf-hashing-php.svg?branch=master)](https://travis-ci.org/whikloj/rdf-hashing-php)
 [![codecov](https://codecov.io/gh/whikloj/rdf-hashing-php/branch/master/graph/badge.svg)](https://codecov.io/gh/whikloj/rdf-hashing-php)
 
-
-
 ## Introduction
 
 Based off the work of [@barmintor](https://github.com/barmintor)'s [rdf-digest](https://github.com/barmintor/rdf-digest).
 RdfHashing is a PHP implementation of the Höfig/Schieferdecker RDF hashing algorithm described in [Hashing of RDF Graphs
 and a Solution to the Blank Node Problem](http://ceur-ws.org/Vol-1259/method2014_submission_1.pdf).
+
+See also my Java implementation at [rdf-hashing-java](https://github.com/whikloj/rdf-hashing-java)
 
 It generates a specifically formatted string based on the above paper and then a SHA-256 hash of that string.
 
@@ -55,6 +55,15 @@ Providing a file path or URL should result in a hash for the found RDF.
 > ./rdfhash --source=./tests/resources/supersimple.ttl                                                                 
 c3f2f988a2e339eb6622ba2fe0d6452fffb1b123fed947ba66900d89b6e3ab5c
 ```
+
+You can also pass the `--debug` argument to see the graph string before it is hashed.
+
+```bash
+> ./rdfhash --source=./tests/resources/supersimple.ttl --debug
+{*(http://ex#pred[*(http://ex#pred[http://ex#A][http://ex#C])][http://ex#C])}{*(http://ex#pred[*(http://ex#pred[http://ex#B][http://ex#C])][http://ex#C])}{*(http://ex#pred[http://ex#A][http://ex#C])}{*(http://ex#pred[http://ex#B][http://ex#C])}
+c3f2f988a2e339eb6622ba2fe0d6452fffb1b123fed947ba66900d89b6e3ab5c
+```
+
 
 ### License
 
