@@ -1,0 +1,62 @@
+#!/usr/bin/env php -q
+<?php
+
+namespace RdfHash;
+
+use RdfHash\RdfHashing;
+use EasyRdf\Graph;
+
+require("./vendor/autoload.php");
+
+function arguments($argv) {
+    $_ARG = array();
+    foreach ($argv as $arg) {
+        if (preg_match('/--([^=]+)=(.*)/',$arg,$reg)) {
+            $_ARG[$reg[1]] = $reg[2];
+        } elseif(preg_match('/-([a-zA-Z0-9])/',$arg,$reg)) {
+            $_ARG[$reg[1]] = 'true';
+        }
+    }
+    return $_ARG;
+}
+
+function printHelpAndExit($message = null) {
+    if (!is_null($message)) {
+        print($message);
+    }
+    print("\nUsage: rdfhash --source\n");
+    print("  --source : file or url of rdf source\n");
+    exit;
+}
+
+function getFile($filename) {
+    $filename = realpath($filename);
+    if (file_exists($filename) && is_readable($filename)) {
+        $graph = new \EasyRdf\Graph();
+        $graph->parseFile($filename);
+        return $graph;
+    }
+    throw new \Exception("File not found or un-readable");
+}
+
+function getUrl($source) {
+    $graph = new \EasyRdf\Graph();
+    $graph->load($source);
+    return $graph;
+}
+
+$arguments = arguments($argv);
+
+if (!isset($arguments['source'])) {
+    printHelpAndExit("You must provide a source path or url\n");
+}
+
+if (strpos($arguments['source'], 'http') === 0) {
+    $graph = getUrl($arguments['source']);
+} else {
+    $graph = getFile($arguments['source']);
+}
+
+$hash = RdfHashing::calculate($graph);
+print($hash);
+exit;

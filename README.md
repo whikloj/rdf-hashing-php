@@ -1,5 +1,5 @@
-[![travis](https://api.travis-ci.org/whikloj/RdfHashing.svg?branch=master)](https://travis-ci.org/whikloj/RdfHashing)
-[![codecov](https://codecov.io/gh/whikloj/RdfHashing/branch/master/graph/badge.svg)](https://codecov.io/gh/whikloj/RdfHashing)
+[![travis](https://api.travis-ci.org/whikloj/rdf-hashing-php.svg?branch=master)](https://travis-ci.org/whikloj/RdfHashing)
+[![codecov](https://codecov.io/gh/whikloj/rdf-hashing-php/branch/master/graph/badge.svg)](https://codecov.io/gh/whikloj/RdfHashing)
 
 
 
@@ -11,14 +11,19 @@ and a Solution to the Blank Node Problem](http://ceur-ws.org/Vol-1259/method2014
 
 It generates a specifically formatted string based on the above paper and then a SHA-256 hash of that string.
 
-### Installation
+## Installation
 
 Install using composer
 ```bash
 composer install
 ```
 
-### Usage
+## Usage
+
+This comes as a small library for inclusion in other applications, but we also include a simple command line
+script to test it out
+
+### Library
 
 ```php
 <?php
@@ -30,6 +35,25 @@ $graph = new Graph();
 $graph->parseFile("/some/file/of/RDF.ttl");
 
 $rdf_hash = RdfHashing::calculate($graph);
+```
+
+### Command line
+
+A script `rdfhash` allows you to try parse a file or URL to generate a RDF hash.
+
+```bash
+> ./rdfhash
+You must provide a source path or url
+
+Usage: rdfhash --source
+  --source : file or url of rdf source
+```
+
+Providing a file path or URL should result in a hash for the found RDF.
+
+```bash
+> ./rdfhash --source=./tests/resources/supersimple.ttl                                                                 
+c3f2f988a2e339eb6622ba2fe0d6452fffb1b123fed947ba66900d89b6e3ab5c
 ```
 
 ### License
