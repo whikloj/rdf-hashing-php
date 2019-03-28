@@ -25,6 +25,11 @@ script to test it out
 
 ### Library
 
+The RdfHashing class provides two static methods.
+
+* `RdfHashing::calculate(graph)` takes an \EasyRdf\Graph and returns the hexadecimal sha256 hash.
+* `RdfHashing::getGraphString(graph)` takes an \EasyRdf\Graph and returns the parsed formatted string of the graph ready to generate the hash.
+
 ```php
 <?php
 
