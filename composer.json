@@ -19,10 +19,10 @@
     }
   },
   "scripts": {
-    "check": "phpcs --standard=PSR2 src tests",
+    "check": "./vendor/bin/phpcs --standard=PSR2 src tests",
     "test": [
       "@check",
-      "phpunit"
+      "./vendor/bin/phpunit"
     ]
   },
   "authors": [
