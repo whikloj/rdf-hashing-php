@@ -8,17 +8,15 @@ use RdfHash\RdfHashing;
 
 /**
  * Class RdfHashingTest
- * @coversDefaultClass RdfHash\RdfHashing
+ * @coversDefaultClass \RdfHash\RdfHashing
  */
 class RdfHashingTest extends TestCase
 {
 
-    private $resource_dir = __DIR__ . '/resources';
-    private $graph_versions = [];
+    private string $resource_dir = __DIR__ . '/resources';
+    private array $graph_versions = [];
 
-    private $hasher;
-
-    public function setUp()
+    public function setUp(): void
     {
         $this->graph_versions = [
         ['url' => realpath($this->resource_dir . '/doap.nt'),
@@ -26,7 +24,6 @@ class RdfHashingTest extends TestCase
         ['url' => realpath($this->resource_dir . '/doap.ttl'),
         'format' => 'turtle'],
         ];
-        $this->hasher = new RdfHashing();
     }
 
   /**
@@ -39,8 +36,6 @@ class RdfHashingTest extends TestCase
    */
     public function testHashFunction()
     {
-
-        $unique_hash = null;
         $data = [];
         foreach ($this->graph_versions as $version) {
             //$text_graph = file_get_contents($version['url']);
